@@ -1,0 +1,4 @@
+"UpdateInfo": 更新配置信息
+"UpdateModelFile"： 更新模型信息（加上类型，eg: "UpdateModelFile, cetv_tf"）
+"RollbackInfo": 回滚配置信息
+"RollbackModelFile"： 回滚模型信息
