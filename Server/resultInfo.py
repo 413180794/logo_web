@@ -1,5 +1,5 @@
 class resultInfo(object):  # 结kkkk果信息
-    __slots__ = ('_dateNow', '_kinfd', '_result', '_startTime', '_usedTime')
+    __slots__ = ('_dateNow', '_kind', '_result', '_startTime', '_usedTime')
 
     def __init__(self, dateNow, kind, result, startTime, usedTime):
         self._dateNow = dateNow
