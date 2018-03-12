@@ -11,7 +11,7 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import sessionmaker, relationship
 from collections import namedtuple
 
-engine = create_engine('mysql+mysqlconnector://root:123456@localhost:3306/logoResult?charset=utf8', echo=False)
+engine = create_engine('mysql+mysqlconnector://root:123456@localhost:3306/logoResult?charset=utf8', echo=True)
 
 Base = declarative_base()  # 什么用？what fuck
 
@@ -290,8 +290,8 @@ class handleSql(object):
         DBSession = sessionmaker(bind=engine)
         session = DBSession()
         ResultInfo.__table__.name = "Result_" + str(deviceDate).replace("-", '_')  # 根据日期选择要查询的表
-        # print(deviceName)
-        # print(deviceDate)
+        print(deviceName)
+        print(deviceDate)
         resultDict = {}
         resultDict['titles'] = ["序号", "设备名称", "信号类型", "识别结果", "识别时间", "耗时"]
         resultDict['data'] = []
@@ -303,7 +303,8 @@ class handleSql(object):
                 resultDict['data'].append(
                     {"id": result.id, "fixId": result.deviceFixId, "kind": result.kind, "result": result.result,
                      "date": result.startTime.strftime("%Y-%m-%d %H:%M:%S"), "usedTime": result.usedTime})
-            # print(resultDict)
+            print("结果是:")
+            print(resultDict)
             return json.dumps(resultDict)
 
         except sqlalchemy.exc.ProgrammingError as e:

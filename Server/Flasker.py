@@ -4,7 +4,7 @@ import threading
 
 import os
 from flask import Flask, request, Response, send_from_directory
-
+from flask_cors import CORS
 from Server import pushToSql
 
 import json
@@ -15,8 +15,8 @@ from time import sleep, time
 from PyQt5.QtCore import QThread, QReadWriteLock, pyqtSignal, QByteArray, QDataStream, QFile, QIODevice, QObject
 from PyQt5.QtNetwork import QTcpSocket, QHostAddress, QTcpServer, QAbstractSocket
 from PyQt5.QtWidgets import QWidget, QApplication, QPushButton
-from Server.resultInfo import resultInfo
-from Server.deviceInfo import deviceInfo
+from resultInfo import resultInfo
+from deviceInfo import deviceInfo
 
 PORT = 31200
 SIZEOF_UINT16 = 2
@@ -316,7 +316,7 @@ class BuildingServicesDlg(QPushButton):
 
 
 app1 = Flask(__name__, static_url_path="")
-
+CORS(app1)
 
 # @app1.route('/')
 # def hello_world():
@@ -474,8 +474,9 @@ def download_file(kindname, filename):
                                as_attachment=True)
 
 if __name__ == '__main__':
-    t = threading.Thread(target=app1.run)
+    t = threading.Thread(target=app1.run,args=('192.168.1.2',5000))
     t.start()
+    # app1.run(host="192.168.1.2",port=5000,threaded=True)
     app = QApplication(sys.argv)
     dig = BuildingServicesDlg()
     sys.exit(app.exec_())
