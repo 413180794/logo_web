@@ -352,6 +352,7 @@ class handleSql(object):
 if __name__ == '__main__':
     handleSql = handleSql()
     handleSql.pushDeviceInfo('31', '安徽' ,'安徽','利辛')
+    handleSql.pushResultInfo('31','AV','bei','2018-12-24 21:12:21')
     #
     # # x = handleSql.selectDeviceInfo('上海')
     # handleSql.selectResultInfo("2zs23", "2018_01_21")

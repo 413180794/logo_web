@@ -86,7 +86,7 @@ class sendMessage(QObject):
             else:
                 model_type = None
             order_instance = generateOrder(order)
-            t = Thread(target=order_instance.run, args=(self.deviceInfo, IP, 8989, model_type))
+            t = Thread(target=order_instance.run, args=(self.deviceInfo, IP, 8870, model_type))
             t.start()
 
     def fileToBytes(self, fileName):  # 将文件转换成二进制
@@ -213,11 +213,11 @@ class sendMessage(QObject):
         self.socket.close()
         self.socket = QTcpSocket()
         print(self.socket.state())
-        while self.socket.state() == 0:
-            print("重新连接")
-            time.sleep(5)
-            self.socket.connectToHost(IP, PORT)
-            self.socket.waitForConnected()
+        # while self.socket.state() == 0:
+        #     print("重新连接")
+        #     time.sleep(5)
+        #     self.socket.connectToHost(IP, PORT)
+        #     self.socket.waitForConnected()
 
         # self.socket.close()
 
@@ -252,7 +252,7 @@ if __name__ == '__main__':
         n = n + 1
         # sendMessage1.sendFile('retrained_graph.pb')
         # sendMessage1.sendResult('HDMI', 'anshu123' + str(n),'2017-12-21 12:23:23','78')    # param 信号类型，识别结果，开始时间，使用时间
-        time.sleep(20)
-        sendMessage1.sendResult('AV', 'shanghai23' + str(n), '2018-03-10 12:23:23', '7')  # param 信号类型，识别结果，开始时间，使用时间
+        time.sleep(2)
+        sendMessage1.sendResult('AV', 'shanghai23' + str(n), '2018-03-13 12:23:23', '7')  # param 信号类型，识别结果，开始时间，使用时间
     # #     print(sendMessage1.socket.state())
     #     print(sendMessage1.socket.currentReadChannel())

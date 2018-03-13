@@ -12,7 +12,8 @@ import pickle
 import sys
 from time import sleep, time
 
-from PyQt5.QtCore import QThread, QReadWriteLock, pyqtSignal, QByteArray, QDataStream, QFile, QIODevice, QObject
+from PyQt5.QtCore import QThread, QReadWriteLock, pyqtSignal, QByteArray, QDataStream, QFile, QIODevice, QObject, \
+    QCoreApplication
 from PyQt5.QtNetwork import QTcpSocket, QHostAddress, QTcpServer, QAbstractSocket
 from PyQt5.QtWidgets import QWidget, QApplication, QPushButton
 from resultInfo import resultInfo
@@ -289,14 +290,12 @@ class TcpServer(QTcpServer):
         thread.start()
 
 
-class BuildingServicesDlg(QPushButton):
+class BuildingServicesDlg(QObject):
     dosomething = pyqtSignal()
 
     def __init__(self):
         super(BuildingServicesDlg, self).__init__()
         self.tcpServer = TcpServer(self)
-        self.resetModelButton = QPushButton()
-        self.clicked.connect(self.dosome)
 
         if not self.tcpServer.listen(QHostAddress("0.0.0.0"), PORT):
             # QMessageBox.critical(self, "Building Services Server",
@@ -316,7 +315,7 @@ class BuildingServicesDlg(QPushButton):
 
 
 app1 = Flask(__name__, static_url_path="")
-CORS(app1)
+# CORS(app1)
 
 # @app1.route('/')
 # def hello_world():
@@ -474,9 +473,10 @@ def download_file(kindname, filename):
                                as_attachment=True)
 
 if __name__ == '__main__':
-    t = threading.Thread(target=app1.run,args=('192.168.1.2',5000))
+    t = threading.Thread(target=app1.run,args=('127.0.0.1',5000))
     t.start()
-    # app1.run(host="192.168.1.2",port=5000,threaded=True)
-    app = QApplication(sys.argv)
+    # app1.run()
+    app = QCoreApplication(sys.argv)
     dig = BuildingServicesDlg()
     sys.exit(app.exec_())
+
